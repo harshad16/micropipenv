@@ -107,7 +107,7 @@ def test_install_pipenv_vcs(venv):
     cmd = [os.path.join(venv.path, "bin", "python3"), micropipenv.__file__, "install", "--method", "pipenv"]
     with cwd(os.path.join(_DATA_DIR, "install", "pipenv_vcs")):
         subprocess.run(cmd, check=True, env={"MICROPIPENV_PIP_BIN": get_pip_path(venv), "MICROPIPENV_DEBUG": "1"})
-        assert str(venv.get_version("daiquiri")) == "2.0.0"
+        assert str(venv.get_version("daiquiri")) == "2.0.1"
 
 
 @pytest.mark.online
@@ -441,9 +441,7 @@ def test_parse_pipenv2pipfile_lock_no_default():
     """Test parsing Pipfile and obtaining only dev dependencies."""
     work_dir = os.path.join(_DATA_DIR, "parse", "pipenv")
     with cwd(work_dir):
-        pipfile_lock = micropipenv.get_requirements_sections(
-            no_default=True,
-        )
+        pipfile_lock = micropipenv.get_requirements_sections(no_default=True,)
 
         assert pipfile_lock == {
             "default": {},
@@ -462,9 +460,7 @@ def test_parse_pipenv2pipfile_lock_no_dev():
     """Test parsing Pipfile.lock and obtaining only default dependencies."""
     work_dir = os.path.join(_DATA_DIR, "parse", "pipenv")
     with cwd(work_dir):
-        pipfile_lock = micropipenv.get_requirements_sections(
-            no_dev=True,
-        )
+        pipfile_lock = micropipenv.get_requirements_sections(no_dev=True,)
 
         assert pipfile_lock == {
             "default": {
